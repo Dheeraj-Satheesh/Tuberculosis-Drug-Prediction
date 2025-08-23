@@ -168,11 +168,11 @@ function getReplacement(weight, option) {
   let d = base[band];
   let drugs = [];
 
-  if (option === "lfx_z1") {
+  if (option === "lfx+z(1)") {
     drugs = ["R", "E", "Lzd", "Cfz"]; // Option 1
-  } else if (option === "lfx_z2") {
+  } else if (option === "lfx+z(2)") {
     drugs = ["R", "E", "Cfz", "Cs"]; // Option 2
-  } else if (option === "lfx_z3") {
+  } else if (option === "lfx+z(3)") {
     drugs = ["R", "E", "Lzd", "Cs"]; // Option 3
   } else if (option === "lfx") {
     drugs = ["R", "E", "Z", "Lzd"];
