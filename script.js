@@ -6,6 +6,8 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
   const regime = document.getElementById("regime").value.toLowerCase();
   const output = document.getElementById("output");
 
+  let downloadBtn = document.getElementById("downloadBtn");
+
   // ✅ DSTB
   if (regime === "dstb") {
     if (age < 18) {
@@ -63,6 +65,7 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
         </div>
       `;
     }
+    downloadBtn.style.display = "inline-block";
   }
 
   // ✅ H mono/poly DR-TB regimen
@@ -72,14 +75,18 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
 
     if (replacementAllowed === "yes") {
       output.innerHTML = wrapTable(getHMonoPolyYes(weight));
+      downloadBtn.style.display = "inline-block";
     } else if (replacementAllowed === "no") {
       if (replacementChoice) {
         output.innerHTML = wrapTable(getReplacement(weight, replacementChoice));
+        downloadBtn.style.display = "inline-block";
       } else {
         output.innerHTML = `<p>Please select a replacement option.</p>`;
+        downloadBtn.style.display = "none";
       }
     } else {
       output.innerHTML = `<p>Please answer Replacement Sequence question.</p>`;
+      downloadBtn.style.display = "none";
     }
   }
 
@@ -87,14 +94,17 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
   else if (regime === "bpalm regimen-26 /39weeks") {
     if (age < 14) {
       output.innerHTML = `<p>⚠️ BPaLM regimen is only applicable for patients aged 14 years and above.</p>`;
+      downloadBtn.style.display = "none";
     } else {
       output.innerHTML = wrapTable(getBPaLMDosage(weight, age));
+      downloadBtn.style.display = "inline-block";
     }
   }
 
   // ✅ Fallback
   else {
     output.textContent = `✅ Your Weight: ${weight} kg | Regime: ${regime}`;
+    downloadBtn.style.display = "none";
   }
 });
 
@@ -258,3 +268,38 @@ replacementAllowed.addEventListener("change", () => {
     replacementOptions.style.display = "none";
   }
 });
+
+/* ---------- DOWNLOAD FUNCTION ---------- */
+/* ---------- DOWNLOAD PDF FUNCTION ---------- */
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const output = document.getElementById("output");
+  const title = output.querySelector("h3") ? output.querySelector("h3").innerText : "TB Report";
+  const info = output.querySelector("p") ? output.querySelector("p").innerText : "";
+
+  const table = output.querySelector("table");
+  if (!table) {
+    alert("⚠ No report table to download!");
+    return;
+  }
+
+  // Add Title
+  doc.setFontSize(16);
+  doc.text(title, 14, 20);
+  doc.setFontSize(11);
+  doc.text(info, 14, 28);
+
+  // AutoTable plugin to parse HTML table
+  doc.autoTable({
+    html: table,
+    startY: 35,
+    theme: "grid",
+    headStyles: { fillColor: [0, 123, 255], textColor: 255 },
+    styles: { fontSize: 10 }
+  });
+
+  doc.save("TB_Report.pdf");
+});
+

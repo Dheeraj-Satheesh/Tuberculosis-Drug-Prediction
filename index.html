@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Tuberculosis Drugs Prediction</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -73,7 +76,12 @@
         </form>
 
         <!-- Output Section -->
+        <!-- Output Section -->
         <div id="output" class="output"></div>
+        <button id="downloadBtn" class="download-btn" style="display:none;">
+            ⬇ Download Report
+        </button>
+
     </main>
 
     <script src="script.js"></script>

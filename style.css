@@ -321,3 +321,21 @@ body {
     box-shadow: 0 0 6px rgba(0, 212, 255, 0.4);
   }
 }
+/* // Download button */
+.download-btn {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b); /* 🔥 bright red contrast */
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.6);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.download-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 75, 43, 0.8);
+}
