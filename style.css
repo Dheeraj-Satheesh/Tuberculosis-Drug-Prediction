@@ -6,38 +6,14 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Animated Gradient Background */
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-/* Animated Gradient Background */
+/* Background Image */
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    -45deg,
-    #ffecd2, /* soft peach */
-    #fcb69f, /* light coral */
-    #a1c4fd, /* light blue */
-    #c2e9fb, /* sky-blue pastel */
-    #d4fc79  /* lime green pastel */
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 18s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 50% 50%; }
-  50% { background-position: 100% 50%; }
-  75% { background-position: 50% 50%; }
-  100% { background-position: 0% 50%; }
+  background: url("bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #e0e6f7; /* default light font color */
 }
 
 /* Navbar */
@@ -45,10 +21,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
   padding: 12px 20px;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
   border-radius: 0 0 12px 12px;
 }
 
@@ -58,7 +34,6 @@ body {
   object-fit: contain;
   transition: transform 0.3s ease;
 }
-
 .logo img:hover {
   transform: scale(1.05);
 }
@@ -68,8 +43,8 @@ body {
   text-align: center;
   font-size: 1.7rem;
   font-weight: bold;
-  color: #30370c;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  color: #00d4ff; /* neon cyan */
+  text-shadow: 0px 0px 10px rgba(0, 212, 255, 0.8);
 }
 
 .menu-btn {
@@ -93,17 +68,17 @@ body {
 
 /* Glass Form */
 .form-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(18px);
   padding: 35px;
   border-radius: 18px;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.8);
   width: 100%;
   max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  color: #222;
+  color: #e0e6f7;
   animation: fadeIn 0.8s ease-in-out;
 }
 
@@ -112,14 +87,14 @@ body {
   font-weight: bold;
   text-align: center;
   margin-bottom: 8px;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  color: #ffdd57; /* bright gold */
+  text-shadow: 0px 0px 8px rgba(255, 221, 87, 0.7);
 }
 
 /* Inputs & Dropdown */
 .form-card label {
   font-weight: 600;
-  color: #fff;
+  color: #cce6ff; /* softer cyan */
 }
 
 .form-card input,
@@ -129,19 +104,31 @@ body {
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  background: rgba(255,255,255,0.85);
-  transition: 0.3s ease;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  transition: all 0.3s ease;
+}
+
+/* Smooth dropdown styling */
+.form-card select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: rgba(255, 255, 255, 0.9) url("data:image/svg+xml;utf8,<svg fill='%2300d4ff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 12px center;
+  background-size: 16px;
+  cursor: pointer;
 }
 
 .form-card input:focus,
 .form-card select:focus {
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.5);
+  transform: scale(1.01);
 }
 
 /* Button */
 .form-card button {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: white;
   padding: 14px;
   border: none;
@@ -150,10 +137,9 @@ body {
   font-weight: bold;
   transition: transform 0.2s, box-shadow 0.3s;
 }
-
 .form-card button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
 }
 
 /* Output */
@@ -162,10 +148,11 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   color: #fff;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.6);
   padding: 18px;
   border-radius: 14px;
   text-align: center;
+  box-shadow: 0px 0px 15px rgba(0, 212, 255, 0.5);
   animation: fadeIn 0.8s ease-in-out;
 }
 
@@ -185,69 +172,65 @@ body {
 .responsive-table {
   width: 100%;
   border-collapse: collapse;
-  background: #ffffff;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #e0e6f7;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-  border: 2px solid #444; /* ✅ darker outer border */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid #00d4ff;
 }
 
 .responsive-table th {
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
   color: #fff;
   text-align: left;
   padding: 12px 15px;
   font-size: 0.95rem;
   text-transform: uppercase;
-  border: 1px solid #333; /* ✅ darker border for header */
+  border: 1px solid #00aaff;
 }
 
 .responsive-table td {
   padding: 12px 15px;
   font-size: 0.95rem;
   text-align: left;
-  color: #222;
-  border: 1px solid #aaa; /* ✅ clearer row borders */
+  color: #f0f6ff;
+  border: 1px solid rgba(0,212,255,0.2);
 }
 
-/* ✅ Alternating row contrast */
 .responsive-table tr:nth-child(odd) td {
-  background: #f4f6fb; /* light bluish-gray */
+  background: rgba(255,255,255,0.05);
 }
 
 .responsive-table tr:nth-child(even) td {
-  background: #e9edf5; /* slightly darker gray-blue */
+  background: rgba(0,0,0,0.4);
 }
 
 /* Footer */
 .footer {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.7);
+  color: #ccc;
   padding: 12px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  color: #fff;
   font-size: 0.95rem;
   font-weight: 500;
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.4);
 }
-
 .footer .social-links {
   position: absolute;
   right: 20px;
   display: flex;
   gap: 15px;
 }
-
 .footer .social-links a {
-  color: #fff;
+  color: #00d4ff;
   font-size: 20px;
   transition: color 0.3s, transform 0.2s;
 }
-
 .footer .social-links a:hover {
   color: #ffdd57;
   transform: scale(1.2);
@@ -274,4 +257,67 @@ body {
   .logo img { height: 35px; }
   .responsive-table th, 
   .responsive-table td { font-size: 0.85rem; padding: 10px; }
+}
+
+/* Quote Banner */
+.quote-banner {
+  width: 100%;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.6);
+  color: #00d4ff;
+  text-shadow: 0px 0px 8px rgba(0, 212, 255, 0.8);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  border-radius: 0 0 14px 14px;
+  animation: fadeIn 1s ease-in-out;
+}
+/* Logo bigger */
+.logo img {
+  height: 60px; /* increased from 40px */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.logo img:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px #00d4ff);
+}
+
+/* Smooth dropdown styling */
+.form-card select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: rgba(255, 255, 255, 0.9) 
+    url("data:image/svg+xml;utf8,<svg fill='%2300d4ff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")
+    no-repeat right 12px center;
+  background-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 🔥 Continuous animation on hover/focus */
+.form-card select:hover,
+.form-card select:focus {
+  animation: glowPulse 1.8s infinite ease-in-out;
+  transform: scale(1.03);
+}
+
+/* Glow animation */
+@keyframes glowPulse {
+  0% {
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.4);
+  }
+  50% {
+    background-color: rgba(230, 250, 255, 0.95);
+    box-shadow: 0 0 14px rgba(0, 212, 255, 0.8);
+  }
+  100% {
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.4);
+  }
 }
