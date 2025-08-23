@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Tuberculosis Drug Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="https://satheesh-dheeraj-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">
+                <img src="logo5.jpg" alt="Satheesh Dheeraj Portfolio Logo" />
+            </a>
+        </div>
+        <h1 class="title">Tuberculosis Drug Prediction</h1>
+        <button class="menu-btn" id="menu-toggle">☰</button>
+    </header>
+
+    <!-- Main Form -->
+    <main class="container">
+        <form id="regime-form" class="form-card">
+            <h2 class="form-heading">Enter Your Details</h2>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" required>
+
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" required>
+
+            <label for="regime">Select Regimen</label>
+            <select id="regime" required>
+                <option value="">-- Select Regimen--</option>
+                <option value="DSTB">DSTB</option>
+                <option value="H mono/poly DR-TB regimen">H mono/poly DR-TB regimen</option>
+                <option value="BPaLM regimen-26 /39weeks">BPaLM regimen-26/39 weeks</option>
+            </select>
+
+            <!-- Replacement question -->
+            <div id="replacement-question" style="display:none;">
+                <label>Replacement Sequence - Drugs can be used?</label>
+                <select id="replacement-allowed">
+                    <option value="">-- Select --</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <!-- If replacement not allowed -->
+            <div id="replacement-options" style="display:none;">
+                <label>Replacement Sequence - Drugs Cannot be used</label>
+                <select id="replacement-choice">
+                    <option value="">-- Select Option --</option>
+                    <option value="lfx">Levofloxacin (Lfx)</option>
+                    <option value="z">Pyrazinamide (Z)</option>
+                    <option value="lzd">Linezolid (Lzd)</option>
+                    <option value="lfx_z1">Levofloxacin + Pyrazinamide (Option 1)</option>
+                    <option value="lfx_z2">Levofloxacin + Pyrazinamide (Option 2)</option>
+                    <option value="lfx_z3">Levofloxacin + Pyrazinamide (Option 3)</option>
+                </select>
+            </div>
+
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Output Section -->
+        <div id="output" class="output"></div>
+    </main>
+
+    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <span>© Satheesh Dheeraj Software Solutions</span>
+        <div class="social-links">
+            <a href="https://github.com/Dheeraj-Satheesh" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/satheeshdheeraj" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/dheeraj2501" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+    </footer>
+
+</body>
+
+</html>
