@@ -13,18 +13,38 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
             output.innerHTML = `
                 <h3>Paediatric DSTB Dosage</h3>
                 <p><b>Age:</b> ${age} years | <b>Weight:</b> ${weight} kg</p>
-                <table border="1" cellpadding="6" cellspacing="0">
-                  <tr><th>Duration</th><th>Drug</th><th>Number of Tablets</th></tr>
-                  <tr><td rowspan="3">2 Months - Intensive Phase</td>
-                      <td>HRZ (H-50 mg/R-75 mg/Z-150 mg)</td>
-                      <td>${result.intensive.HRZ}</td></tr>
-                  <tr><td>E (E-100 mg)</td><td>${result.intensive.E}</td></tr>
-                  <tr><td>Adult FDC (H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td><td>${result.intensive.adult}</td></tr>
-                  <tr><td rowspan="3">4 Months - Continuation Phase</td>
-                      <td>HR (H-50 mg/R-75 mg)</td>
-                      <td>${result.continuation.HR}</td></tr>
-                  <tr><td>E (E-100 mg)</td><td>${result.continuation.E}</td></tr>
-                  <tr><td>Adult FDC (H-75 mg/R-150 mg/E-275 mg)</td><td>${result.continuation.adult}</td></tr>
+                <table class="responsive-table">
+                  <thead>
+                    <tr><th>Duration</th><th>Drug</th><th>Number of Tablets</th></tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td data-label="Duration" rowspan="3">2 Months - Intensive Phase</td>
+                    <td data-label="Drug">HRZ (H-50 mg/R-75 mg/Z-150 mg)</td>
+                    <td data-label="No. of Tablets">${result.intensive.HRZ}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Drug">E (E-100 mg)</td>
+                    <td data-label="No. of Tablets">${result.intensive.E}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Drug">Adult FDC (H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td>
+                    <td data-label="No. of Tablets">${result.intensive.adult}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Duration" rowspan="3">4 Months - Continuation Phase</td>
+                    <td data-label="Drug">HR (H-50 mg/R-75 mg)</td>
+                    <td data-label="No. of Tablets">${result.continuation.HR}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Drug">E (E-100 mg)</td>
+                    <td data-label="No. of Tablets">${result.continuation.E}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Drug">Adult FDC (H-75 mg/R-150 mg/E-275 mg)</td>
+                    <td data-label="No. of Tablets">${result.continuation.adult}</td>
+                  </tr>
+                  </tbody>
                 </table>
             `;
         } else {
@@ -32,14 +52,22 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
             output.innerHTML = `
                 <h3>Adult DSTB Dosage</h3>
                 <p><b>Age:</b> ${age} years | <b>Weight:</b> ${weight} kg</p>
-                <table border="1" cellpadding="6" cellspacing="0">
-                  <tr><th>Duration</th><th>Drugs</th><th>Number of Tablets</th></tr>
-                  <tr><td>2 Months - Intensive Phase</td>
-                      <td>HRZE (Adult-H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td>
-                      <td>${result.intensive}</td></tr>
-                  <tr><td>4 Months - Continuation Phase</td>
-                      <td>HRE (Adult-H-75 mg/R-150 mg/E-275 mg)</td>
-                      <td>${result.continuation}</td></tr>
+                <table class="responsive-table">
+                  <thead>
+                    <tr><th>Duration</th><th>Drug</th><th>Number of Tablets</th></tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td data-label="Duration">2 Months - Intensive Phase</td>
+                    <td data-label="Drug">HRZE (Adult-H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td>
+                    <td data-label="No. of Tablets">${result.intensive}</td>
+                  </tr>
+                  <tr>
+                    <td data-label="Duration">4 Months - Continuation Phase</td>
+                    <td data-label="Drug">HRE (Adult-H-75 mg/R-150 mg/E-275 mg)</td>
+                    <td data-label="No. of Tablets">${result.continuation}</td>
+                  </tr>
+                  </tbody>
                 </table>
             `;
         }
@@ -63,7 +91,7 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
         }
     }
 
-    // ✅ BPaLM Regimen (Third Regimen)
+    // ✅ BPaLM Regimen
     else if (regime === "bpalm regimen-26 /39weeks") {
         if (age < 14) {
             output.innerHTML = `<p>⚠️ BPaLM regimen is only applicable for patients aged 14 years and above.</p>`;
@@ -72,7 +100,7 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
         }
     }
 
-    // ✅ Other regimens (default fallback)
+    // ✅ Fallback
     else {
         output.textContent = `✅ Your Weight: ${weight} kg | Regime: ${regime}`;
     }
@@ -122,12 +150,14 @@ function getHMonoPolyYes(weight) {
     return `
       <h3>H mono/poly DR-TB regimen (Allowed)</h3>
       <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
-      <table border="1" cellpadding="6" cellspacing="0">
-        <tr><th>Drug</th><th>Dosage</th></tr>
-        <tr><td>Rifampicin (R)</td><td>${d.R}</td></tr>
-        <tr><td>Ethambutol (E)</td><td>${d.E}</td></tr>
-        <tr><td>Pyrazinamide (Z)</td><td>${d.Z}</td></tr>
-        <tr><td>Levofloxacin (Lfx)</td><td>${d.Lfx}</td></tr>
+      <table class="responsive-table">
+        <thead><tr><th>Drug</th><th>Dosage</th></tr></thead>
+        <tbody>
+        <tr><td data-label="Drug">Rifampicin (R)</td><td data-label="Dosage">${d.R}</td></tr>
+        <tr><td data-label="Drug">Ethambutol (E)</td><td data-label="Dosage">${d.E}</td></tr>
+        <tr><td data-label="Drug">Pyrazinamide (Z)</td><td data-label="Dosage">${d.Z}</td></tr>
+        <tr><td data-label="Drug">Levofloxacin (Lfx)</td><td data-label="Dosage">${d.Lfx}</td></tr>
+        </tbody>
       </table>
     `;
 }
@@ -146,15 +176,10 @@ function getReplacement(weight, option) {
     let d = base[band];
     let drugs = [];
 
-    if (option === "lfx") {
-        drugs = ["R", "E", "Z", "Lzd"];
-    } else if (option === "z") {
-        drugs = ["R", "E", "Lfx", "Lzd"];
-    } else if (option === "lzd") {
-        drugs = ["R", "E", "Lfx", "Cfz", "Cs"];
-    } else {
-        return `<p>⚠️ Option not yet implemented</p>`;
-    }
+    if (option === "lfx") drugs = ["R", "E", "Z", "Lzd"];
+    else if (option === "z") drugs = ["R", "E", "Lfx", "Lzd"];
+    else if (option === "lzd") drugs = ["R", "E", "Lfx", "Cfz", "Cs"];
+    else return `<p>⚠️ Option not yet implemented</p>`;
 
     let rows = drugs.map(drug => {
         let name = {
@@ -162,15 +187,15 @@ function getReplacement(weight, option) {
             Lfx: "Levofloxacin (Lfx)", Lzd: "Linezolid (Lzd)",
             Cfz: "Clofazimine (Cfz)", Cs: "Cycloserine (Cs)"
         }[drug];
-        return `<tr><td>${name}</td><td>${d[drug]}</td></tr>`;
+        return `<tr><td data-label="Drug">${name}</td><td data-label="Dosage">${d[drug]}</td></tr>`;
     }).join("");
 
     return `
       <h3>Replacement Regimen: ${option.toUpperCase()}</h3>
       <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
-      <table border="1" cellpadding="6" cellspacing="0">
-        <tr><th>Drug</th><th>Dosage</th></tr>
-        ${rows}
+      <table class="responsive-table">
+        <thead><tr><th>Drug</th><th>Dosage</th></tr></thead>
+        <tbody>${rows}</tbody>
       </table>
     `;
 }
@@ -189,14 +214,16 @@ function getBPaLMDosage(weight, age) {
     return `
       <h3>BPaLM regimen (26/39 weeks)</h3>
       <p><b>Age:</b> ${age} years | <b>Weight:</b> ${weight} kg</p>
-      <table border="1" cellpadding="6" cellspacing="0">
-        <tr><th>Drug</th><th>Duration</th><th>Dosage</th><th>No. of Tablets</th></tr>
-        <tr><td>Bedaquiline (Bdq)</td><td>First Two Weeks</td><td>400 mg once daily</td><td>(4 × Bdq 100 mg)</td></tr>
-        <tr><td>Bedaquiline (Bdq)</td><td>Weeks 3rd–26/39*</td><td>200 mg three times a week</td><td>(2 × Bdq 100 mg)</td></tr>
-        <tr><td>Pretomanid (Pa)</td><td>Weeks 1–26/39*</td><td>200 mg once daily</td><td>(1 × Pa 200 mg)</td></tr>
-        <tr><td>Linezolid (Lzd)</td><td>Weeks 1–26/39*</td><td>600 mg once daily</td><td>(1 × Lzd 600 mg)</td></tr>
-        <tr><td>Moxifloxacin (Mfx)</td><td>Weeks 1–26/39*</td><td>400 mg once daily</td><td>(1 × Mfx 400 mg)</td></tr>
-        <tr><td>Pyridoxine (Pdx)</td><td>Weeks 1–26/39*</td><td>${pdx.dose}</td><td>${pdx.tablet}</td></tr>
+      <table class="responsive-table">
+        <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th><th>No. of Tablets</th></tr></thead>
+        <tbody>
+        <tr><td data-label="Drug">Bedaquiline (Bdq)</td><td data-label="Duration">First Two Weeks</td><td data-label="Dosage">400 mg once daily</td><td data-label="Tablets">(4 × Bdq 100 mg)</td></tr>
+        <tr><td data-label="Drug">Bedaquiline (Bdq)</td><td data-label="Duration">Weeks 3rd–26/39*</td><td data-label="Dosage">200 mg three times a week</td><td data-label="Tablets">(2 × Bdq 100 mg)</td></tr>
+        <tr><td data-label="Drug">Pretomanid (Pa)</td><td data-label="Duration">Weeks 1–26/39*</td><td data-label="Dosage">200 mg once daily</td><td data-label="Tablets">(1 × Pa 200 mg)</td></tr>
+        <tr><td data-label="Drug">Linezolid (Lzd)</td><td data-label="Duration">Weeks 1–26/39*</td><td data-label="Dosage">600 mg once daily</td><td data-label="Tablets">(1 × Lzd 600 mg)</td></tr>
+        <tr><td data-label="Drug">Moxifloxacin (Mfx)</td><td data-label="Duration">Weeks 1–26/39*</td><td data-label="Dosage">400 mg once daily</td><td data-label="Tablets">(1 × Mfx 400 mg)</td></tr>
+        <tr><td data-label="Drug">Pyridoxine (Pdx)</td><td data-label="Duration">Weeks 1–26/39*</td><td data-label="Dosage">${pdx.dose}</td><td data-label="Tablets">${pdx.tablet}</td></tr>
+        </tbody>
       </table>
     `;
 }
@@ -207,7 +234,6 @@ const replacementQuestion = document.getElementById("replacement-question");
 const replacementAllowed = document.getElementById("replacement-allowed");
 const replacementOptions = document.getElementById("replacement-options");
 
-// Show replacement question if "H mono/poly DR-TB regimen" selected
 regimeSelect.addEventListener("change", () => {
     if (regimeSelect.value === "H mono/poly DR-TB regimen") {
         replacementQuestion.style.display = "block";
@@ -217,7 +243,6 @@ regimeSelect.addEventListener("change", () => {
     }
 });
 
-// Show replacement options only if "No" selected
 replacementAllowed.addEventListener("change", () => {
     if (replacementAllowed.value === "no") {
         replacementOptions.style.display = "block";
