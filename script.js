@@ -22,14 +22,14 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
             </thead>
             <tbody>
               <tr>
-                <td rowspan="3">2 Months - Intensive Phase</td>
+                <td rowspan="3">2 Months - Intensive Phase (2 HRZE)</td>
                 <td>HRZ (H-50 mg/R-75 mg/Z-150 mg)</td>
                 <td>${result.intensive.HRZ}</td>
               </tr>
               <tr><td>E (E-100 mg)</td><td>${result.intensive.E}</td></tr>
               <tr><td>Adult FDC (H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td><td>${result.intensive.adult}</td></tr>
               <tr>
-                <td rowspan="3">4 Months - Continuation Phase</td>
+                <td rowspan="3">4 Months - Continuation Phase (4 HRE) </td>
                 <td>HR (H-50 mg/R-75 mg)</td>
                 <td>${result.continuation.HR}</td>
               </tr>
@@ -51,12 +51,12 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
             </thead>
             <tbody>
               <tr>
-                <td>2 Months - Intensive Phase</td>
+                <td>2 Months - Intensive Phase (2 HRZE)</td>
                 <td>HRZE (Adult-H-75 mg/R-150 mg/Z-400 mg/E-275 mg)</td>
                 <td>${result.intensive}</td>
               </tr>
               <tr>
-                <td>4 Months - Continuation Phase</td>
+                <td>4 Months - Continuation Phase (4 HRE)</td>
                 <td>HRE (Adult-H-75 mg/R-150 mg/E-275 mg)</td>
                 <td>${result.continuation}</td>
               </tr>
@@ -125,6 +125,27 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
     }
     downloadBtn.style.display = "inline-block";
   }
+  // ✅ 18-20 months longer oral M/XDR-TB regimen
+  else if (regime === "longermdrtb") {
+    if (age < 14) {
+      output.innerHTML = `<p>⚠️ This regimen is not allowed for patients below 14 years.</p>`;
+      downloadBtn.style.display = "none";
+    } else {
+      output.innerHTML = wrapTable(getLongerMDRTB(weight));
+      downloadBtn.style.display = "inline-block";
+    }
+  }
+
+  else if (regime === "longerreplacement") {
+    if (age < 14) {
+      output.innerHTML = `<p>⚠️ This regimen is not allowed for patients below 14 years.</p>`;
+      downloadBtn.style.display = "none";
+    } else {
+      output.innerHTML = wrapTable(getLongerMDRTBReplacement(weight));
+      downloadBtn.style.display = "inline-block";
+    }
+  }
+
 
   // ✅ Fallback
   else {
@@ -176,15 +197,15 @@ function getHMonoPolyYes(weight) {
 
   let d = table[band];
   return `
-    <h3>H mono/poly DR-TB regimen (Allowed)</h3>
+    <h3>H mono/poly DR-TB regimen (6 or 9 months) Lfx R Z E </h3>
     <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
     <table class="responsive-table">
       <thead><tr><th>Drug</th><th>Dosage</th></tr></thead>
       <tbody>
+       <tr><td>Levofloxacin (Lfx)</td><td>${d.Lfx}</td></tr>
         <tr><td>Rifampicin (R)</td><td>${d.R}</td></tr>
-        <tr><td>Ethambutol (E)</td><td>${d.E}</td></tr>
         <tr><td>Pyrazinamide (Z)</td><td>${d.Z}</td></tr>
-        <tr><td>Levofloxacin (Lfx)</td><td>${d.Lfx}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>${d.E}</td></tr>
       </tbody>
     </table>
   `;
@@ -230,6 +251,7 @@ function getReplacement(weight, option) {
   }).join("");
 
   return `
+  <h3>H mono/poly DR-TB regimen (6 or 9 months)</h3>
     <h3>Replacement Regimen: ${option.toUpperCase()}</h3>
     <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
     <table class="responsive-table">
@@ -251,7 +273,7 @@ function getBPaLMDosage(weight, age) {
   }
 
   return `
-    <h3>BPaLM regimen (26/39 weeks)</h3>
+    <h3>6-9 Months BPaLM regimen (26/39 weeks) </h3>
     <p><b>Age:</b> ${age} years | <b>Weight:</b> ${weight} kg</p>
     <table class="responsive-table">
       <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th><th>No. of Tablets</th></tr></thead>
@@ -267,7 +289,7 @@ function getBPaLMDosage(weight, age) {
   `;
 }
 /* ---------- MDRTB HELPERS ---------- */
-/* ---------- MDRTB HELPERS ---------- */
+
 function getWeightBand(weight) {
   if (weight >= 26 && weight <= 29) return "26-29";
   if (weight >= 30 && weight <= 45) return "30-45";
@@ -377,7 +399,127 @@ function getMDREthionamide(weight) {
     </table>
   `;
 }
+/* ----------Longer MDRTB HELPERS ---------- */
+function getLongerMDRTB(weight) {
+  const band = getWeightBand(weight);
+  if (!band) return `<p>⚠️ Weight below 26 kg not supported for this regimen.</p>`;
 
+  const data = {
+    "26-29": { Bdq1: "400 mg once daily", Bdq2: "200 mg three times a week", Lfx: "250 mg", Lzd: "600 mg", Cfz: "50 mg", Cs: "250 mg", Pdx: "250 mg" },
+    "30-45": { Bdq1: "400 mg once daily", Bdq2: "200 mg three times a week", Lfx: "750 mg", Lzd: "600 mg", Cfz: "100 mg", Cs: "500 mg", Pdx: "500 mg" },
+    "46-70": { Bdq1: "400 mg once daily", Bdq2: "200 mg three times a week", Lfx: "1000 mg", Lzd: "600 mg", Cfz: "100 mg", Cs: "750 mg", Pdx: "750 mg" },
+    ">70": { Bdq1: "400 mg once daily", Bdq2: "200 mg three times a week", Lfx: "1000 mg", Lzd: "600 mg", Cfz: "200 mg", Cs: "1000 mg", Pdx: "1000 mg" }
+  };
+
+  const d = data[band];
+
+  return `
+    <h3>18-20 Months Longer Oral M/XDR-TB Regimen (6 or longer) Bdq (18-20 months) Lfx Lzd Cfz Cs</h3>
+    <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
+
+    <table class="responsive-table">
+      <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th></tr></thead>
+      <tbody>
+        <tr><td>Bedaquiline (Bdq)</td><td>First Two Weeks</td><td>${d.Bdq1}</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>Weeks 3 to 24–longer</td><td>${d.Bdq2}</td></tr>
+        <tr><td>Levofloxacin (Lfx)</td><td>18–20 Months</td><td>${d.Lfx}</td></tr>
+        <tr><td>Linezolid (Lzd)</td><td>18–20 Months</td><td>${d.Lzd}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>18–20 Months</td><td>${d.Cfz}</td></tr>
+        <tr><td>Cycloserine (Cs)<sup style="color:#FFD700;">*</sup></td><td>18–20 Months</td><td>${d.Cs}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>18–20 Months</td><td>${d.Pdx}</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:18px; font-weight:bold; color:#FFD700; margin-top:10px;">
+  * Drugs can be given in divided doses in a day in the event of intolerance
+</p>
+  `;
+}
+/* ----------Longer MDRTB HELPERS ---------- */
+// with replacements
+function getLongerMDRTBReplacement(weight) {
+  // Determine weight band
+  let band = "";
+  if (weight >= 16 && weight <= 29) band = "16-29";
+  else if (weight >= 30 && weight <= 45) band = "30-45";
+  else if (weight >= 46 && weight <= 70) band = "46-70";
+  else if (weight > 70) band = ">70";
+  else return `<p>⚠️ Regimen not recommended for weight below 16 kg.</p>`;
+
+  // Dose data
+  const dose = {
+    "16-29": {
+      Lfx: "250 mg", Mfx: "200 mg", Bdq1: "400 mg daily (Weeks 0–2)",
+      Bdq2: "200 mg three times per week (Weeks 3–24)",
+      Cfz: "50 mg", Cs: "250 mg", Lzd: "300 mg", Dlm: "50 mg twice daily (100 mg) for 24 weeks in 6-11 years of age & 100 mg twice daily (200 mg) for 24 weeks in 12 years and above of age",
+      Am: "500 mg", Z: "750 mg", Eto: "375 mg", PAS: "10 gm",
+      E: "400 mg", ImpCln: "2 vials (1 g + 1 g) bd (to be used with Clavulanic acid)",
+      Mpm: "1000 mg three times daily (alternative dosing is 2000 mg twice  daily) (to be used with Clavulanic acid)", AmxClv: "875/125 mg bd", Pdx: "50 mg"
+    },
+    "30-45": {
+      Lfx: "750 mg", Mfx: "400 mg", Bdq1: "400 mg daily (Weeks 0–2)",
+      Bdq2: "200 mg three times per week (Weeks 3–24)",
+      Cfz: "100 mg", Cs: "500 mg", Lzd: "600 mg", Dlm: "50 mg twice daily (100 mg) for 24 weeks in 6-11 years of age & 100 mg twice daily (200 mg) for 24 weeks in 12 years and above of age",
+      Am: "750 mg", Z: "1250 mg", Eto: "500 mg", PAS: "14 gm",
+      E: "800 mg", ImpCln: "2 vials (1 g + 1 g) bd (to be used with Clavulanic acid)",
+      Mpm: "1000 mg three times daily (alternative dosing is 2000 mg twice  daily) (to be used with Clavulanic acid)", AmxClv: "875/125 mg bd", Pdx: "100 mg"
+    },
+    "46-70": {
+      Lfx: "1000 mg", Mfx: "400 mg", Bdq1: "400 mg daily (Weeks 0–2)",
+      Bdq2: "200 mg three times per week (Weeks 3–24)",
+      Cfz: "100 mg", Cs: "750 mg", Lzd: "600 mg", Dlm: "50 mg twice daily (100 mg) for 24 weeks in 6-11 years of age & 100 mg twice daily (200 mg) for 24 weeks in 12 years and above of age",
+      Am: "750 mg", Z: "1750 mg", Eto: "750 mg", PAS: "16 gm",
+      E: "1200 mg", ImpCln: "2 vials (1 g + 1 g) bd (to be used with Clavulanic acid)",
+      Mpm: "1000 mg three times daily (alternative dosing is 2000 mg twice  daily) (to be used with Clavulanic acid)", AmxClv: "875/125 mg bd", Pdx: "100 mg"
+    },
+    ">70": {
+      Lfx: "1000 mg", Mfx: "400 mg", Bdq1: "400 mg daily (Weeks 0–2)",
+      Bdq2: "200 mg three times per week (Weeks 3–24)",
+      Cfz: "200 mg", Cs: "1000 mg", Lzd: "600 mg", Dlm: "50 mg twice daily (100 mg) for 24 weeks in 6-11 years of age & 100 mg twice daily (200 mg) for 24 weeks in 12 years and above of age",
+      Am: "1000 mg", Z: "2000 mg", Eto: "1000 mg", PAS: "22 gm",
+      E: "1600 mg", ImpCln: "2 vials (1 g + 1 g) bd (to be used with Clavulanic acid)",
+      Mpm: "1000 mg three times daily (alternative dosing is 2000 mg twice  daily) (to be used with Clavulanic acid)", AmxClv: "875/125 mg bd", Pdx: "100 mg"
+    }
+  };
+
+  const d = dose[band];
+
+  // Return table + notes
+  return `
+    <h3>Dosage of M/XDR-TB Drugs for Adults</h3>
+    <h4>Longer Oral M/XDR-TB Regimen (with Replacement Drugs)</h4>
+    <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
+
+    <table class="responsive-table">
+      <thead>
+        <tr><th>Drug</th><th>Dosage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Levofloxacin (Lfx)</td><td>${d.Lfx}</td></tr>
+        <tr><td>Moxifloxacin (Mfx)</td><td>${d.Mfx}</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>${d.Bdq1}<br>${d.Bdq2}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>${d.Cfz}</td></tr>
+        <tr><td>Cycloserine (Cs)<sup style="color:#FFD700;">3</sup></td><td>${d.Cs}</td></tr>
+        <tr><td>Linezolid (Lzd)</td><td>${d.Lzd}</td></tr>
+        <tr><td>Delamanid (Dlm)</td><td>${d.Dlm}</td></tr>
+        <tr><td>Amikacin (Am)<sup style="color:#FFD700;">1</sup></td><td>${d.Am}</td></tr>
+        <tr><td>Pyrazinamide (Z)</td><td>${d.Z}</td></tr>
+        <tr><td>Ethionamide (Eto)<sup style="color:#FFD700;">3</sup></td><td>${d.Eto}</td></tr>
+        <tr><td>Na-PAS (60% w/v)<sup style="color:#FFD700;">2,3</sup></td><td>${d.PAS}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>${d.E}</td></tr>
+        <tr><td>Imipenem-Cilastatin (Imp-Cln)<sup style="color:#FFD700;">3</sup></td><td>${d.ImpCln}</td></tr>
+        <tr><td>Meropenem (Mpm)<sup style="color:#FFD700;">3</sup></td><td>${d.Mpm}</td></tr>
+        <tr><td>Amoxicillin-Clavulanate (Amx-Clv)</td><td>${d.AmxClv}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>${d.Pdx}</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:16px; font-weight:bold; color:#FFD700; margin-top:10px;">
+      1. For adults >60 yrs, dose of SLI should be reduced to 10 mg/kg (max 750 mg)<br>
+      2. Patients receiving PAS with 80% weight/volume, the dose will be changed to 7.5 gm (16-29 kg); 10 gm (30- 45 Kg); 12 gm (46-70 Kg) and 16 gm (70 kg and above)<br>
+      3. Drugs can be given in divided doses in a day in case of intolerance
+    </p>
+  `;
+}
 
 /* ---------- WRAPPER FUNCTION ---------- */
 function wrapTable(html) {
@@ -437,7 +579,18 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
   doc.text(info, 14, 28);
 
   let yPos = 35; // initial Y position
+
   tables.forEach((table, idx) => {
+    // ✅ Check if previous element is an <h4> (section heading)
+    let prevElem = table.previousElementSibling;
+    if (prevElem && prevElem.tagName === "H4") {
+      doc.setFontSize(13);
+      doc.setFont(undefined, "bold");
+      doc.text(prevElem.innerText, 14, yPos);
+      yPos += 6; // space after heading
+    }
+
+    // ✅ Export table
     doc.autoTable({
       html: table,
       startY: yPos,
@@ -446,20 +599,20 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
       styles: { fontSize: 10 }
     });
 
-    // Move Y below the table
     yPos = doc.lastAutoTable.finalY + 8;
 
-    // ✅ Check if the next sibling element is a note (<p>)
+    // ✅ Check if next sibling element is a note (<p>)
     let nextElem = table.nextElementSibling;
     if (nextElem && nextElem.tagName === "P") {
       doc.setFontSize(12);
-      doc.setTextColor(255, 0, 0); // red for high contrast in PDF
+      doc.setFont(undefined, "normal");
+      doc.setTextColor(200, 0, 0); // red for visibility
       doc.text(nextElem.innerText, 14, yPos);
-      yPos += 10; // space after note
-      doc.setTextColor(0, 0, 0); // reset back to black
+      yPos += 10;
+      doc.setTextColor(0, 0, 0); // reset to black
     }
   });
 
-  doc.save("TB_Report.pdf");
+  doc.save("TB_Regimen_dosage.pdf");
 });
 
