@@ -68,6 +68,7 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
     downloadBtn.style.display = "inline-block";
   }
 
+
   // ✅ H mono/poly DR-TB regimen
   else if (regime === "h mono/poly dr-tb regimen") {
     const replacementAllowed = document.getElementById("replacement-allowed").value;
@@ -101,12 +102,37 @@ document.getElementById("regime-form").addEventListener("submit", function (e) {
     }
   }
 
+  // ✅ MDRTB Regimen
+  else if (regime === "mdrtb") {
+    const mdrChoice = document.getElementById("mdr-choice").value;
+
+    if (age < 14) {
+      output.innerHTML = `<p>⚠️ MDR/RR-TB regimen is not allowed for patients below 14 years.</p>`;
+      downloadBtn.style.display = "none";
+      return;
+    }
+
+    if (!mdrChoice) {
+      output.innerHTML = `<p>Please select a medicine option (Linezolid or Ethionamide).</p>`;
+      downloadBtn.style.display = "none";
+      return;
+    }
+
+    if (mdrChoice === "linezolid") {
+      output.innerHTML = wrapTable(getMDRLinezolid(weight));
+    } else if (mdrChoice === "ethionamide") {
+      output.innerHTML = wrapTable(getMDREthionamide(weight));
+    }
+    downloadBtn.style.display = "inline-block";
+  }
+
   // ✅ Fallback
   else {
     output.textContent = `✅ Your Weight: ${weight} kg | Regime: ${regime}`;
     downloadBtn.style.display = "none";
   }
 });
+
 
 /* ---------- DSTB HELPERS ---------- */
 function getPediatricDosage(weight) {
@@ -240,6 +266,118 @@ function getBPaLMDosage(weight, age) {
     </table>
   `;
 }
+/* ---------- MDRTB HELPERS ---------- */
+/* ---------- MDRTB HELPERS ---------- */
+function getWeightBand(weight) {
+  if (weight >= 26 && weight <= 29) return "26-29";
+  if (weight >= 30 && weight <= 45) return "30-45";
+  if (weight >= 46 && weight <= 70) return "46-70";
+  if (weight > 70) return ">70";
+  return null;
+}
+
+function getMDRLinezolid(weight) {
+  const band = getWeightBand(weight);
+  if (!band) return `<p>⚠️ Weight below 26 kg not supported for this regimen.</p>`;
+
+  const data = {
+    "26-29": { Lzd: "600 mg", Lfx: "250 mg", Cfz: "50 mg", Z: "750 mg", E: "400 mg", Hh: "300 mg", Pdx: "50 mg" },
+    "30-45": { Lzd: "600 mg", Lfx: "750 mg", Cfz: "100 mg", Z: "1250 mg", E: "800 mg", Hh: "600 mg", Pdx: "100 mg" },
+    "46-70": { Lzd: "600 mg", Lfx: "1000 mg", Cfz: "100 mg", Z: "1750 mg", E: "1200 mg", Hh: "900 mg", Pdx: "100 mg" },
+    ">70": { Lzd: "600 mg", Lfx: "1000 mg", Cfz: "200 mg", Z: "2000 mg", E: "1600 mg", Hh: "900 mg", Pdx: "100 mg" }
+  };
+
+  const d = data[band];
+
+  return `
+    <h3>9-11 Month Shorter Oral MDR/RR-TB Regimen with Linezolid</h3>
+    <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
+
+    <!-- Intensive Phase -->
+    <h4>Intensive Phase (2 Lzd + 4-6 Lfx Cfz Z E Hh + 6-9 Bdq)</h4>
+    <table class="responsive-table">
+      <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th></tr></thead>
+      <tbody>
+        <tr><td>Linezolid (Lzd)</td><td>2 Months</td><td>${d.Lzd}</td></tr>
+        <tr><td>Levofloxacin (Lfx)</td><td>4-6 Months</td><td>${d.Lfx}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>4-6 Months</td><td>${d.Cfz}</td></tr>
+        <tr><td>Pyrazinamide (Z)</td><td>4-6 Months</td><td>${d.Z}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>4-6 Months</td><td>${d.E}</td></tr>
+        <tr><td>High dose H (Hh)</td><td>4-6 Months</td><td>${d.Hh}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>4-6 Months</td><td>${d.Pdx}</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>First 2 Weeks</td><td>400 mg once daily</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>Weeks 3–24/36</td><td>200 mg three times a week</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Continuation Phase -->
+    <h4>Continuation Phase (5 Lfx Cfz Z E)</h4>
+    <table class="responsive-table">
+      <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th></tr></thead>
+      <tbody>
+        <tr><td>Levofloxacin (Lfx)</td><td>5 Months</td><td>${d.Lfx}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>5 Months</td><td>${d.Cfz}</td></tr>
+        <tr><td>Pyrazinamide (Z)</td><td>5 Months</td><td>${d.Z}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>5 Months</td><td>${d.E}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>5 Months</td><td>${d.Pdx}</td></tr>
+      </tbody>
+    </table>
+  `;
+}
+
+function getMDREthionamide(weight) {
+  const band = getWeightBand(weight);
+  if (!band) return `<p>⚠️ Weight below 26 kg not supported for this regimen.</p>`;
+
+  const data = {
+    "26-29": { Lfx: "250 mg", Cfz: "50 mg", Eto: "375 mg", Z: "750 mg", E: "400 mg", Hh: "300 mg", Pdx: "50 mg" },
+    "30-45": { Lfx: "750 mg", Cfz: "100 mg", Eto: "500 mg", Z: "1250 mg", E: "800 mg", Hh: "600 mg", Pdx: "100 mg" },
+    "46-70": { Lfx: "1000 mg", Cfz: "100 mg", Eto: "750 mg", Z: "1750 mg", E: "1200 mg", Hh: "900 mg", Pdx: "100 mg" },
+    ">70": { Lfx: "1000 mg", Cfz: "200 mg", Eto: "1000 mg", Z: "2000 mg", E: "1600 mg", Hh: "900 mg", Pdx: "100 mg" }
+  };
+
+  const d = data[band];
+
+  return `
+    <h3>9-11 Month Shorter Oral MDR/RR-TB Regimen with Ethionamide</h3>
+    <p><b>Weight:</b> ${weight} kg (${band} kg)</p>
+
+    <!-- Intensive Phase -->
+    <h4>Intensive Phase (4-6 Lfx Cfz Eto Z E Hh + 6-9 Bdq)</h4>
+    <table class="responsive-table">
+      <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th></tr></thead>
+      <tbody>
+        <tr><td>Levofloxacin (Lfx)</td><td>4-6 Months</td><td>${d.Lfx}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>4-6 Months</td><td>${d.Cfz}</td></tr>
+        <tr><td>Ethionamide (Eto)<sup style="color:#FFD700;">*</sup></td><td>4-6 Months</td><td>${d.Eto}</td></tr>
+        <tr><td>Pyrazinamide (Z)</td><td>4-6 Months</td><td>${d.Z}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>4-6 Months</td><td>${d.E}</td></tr>
+        <tr><td>High dose H (Hh)</td><td>4-6 Months</td><td>${d.Hh}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>4-6 Months</td><td>${d.Pdx}</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>First 2 Weeks</td><td>400 mg once daily</td></tr>
+        <tr><td>Bedaquiline (Bdq)</td><td>Weeks 3–24/36</td><td>200 mg three times a week</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:18px; font-weight:bold; color:#FFD700; margin-top:10px;">
+  * Drugs can be given in divided doses in a day in the event of intolerance
+</p>
+
+
+    <!-- Continuation Phase -->
+    <h4>Continuation Phase (5 Lfx Cfz Z E)</h4>
+    <table class="responsive-table">
+      <thead><tr><th>Drug</th><th>Duration</th><th>Dosage</th></tr></thead>
+      <tbody>
+        <tr><td>Levofloxacin (Lfx)</td><td>5 Months</td><td>${d.Lfx}</td></tr>
+        <tr><td>Clofazimine (Cfz)</td><td>5 Months</td><td>${d.Cfz}</td></tr>
+        <tr><td>Pyrazinamide (Z)</td><td>5 Months</td><td>${d.Z}</td></tr>
+        <tr><td>Ethambutol (E)</td><td>5 Months</td><td>${d.E}</td></tr>
+        <tr><td>Pyridoxine (Pdx)</td><td>5 Months</td><td>${d.Pdx}</td></tr>
+      </tbody>
+    </table>
+  `;
+}
+
 
 /* ---------- WRAPPER FUNCTION ---------- */
 function wrapTable(html) {
@@ -251,13 +389,20 @@ const regimeSelect = document.getElementById("regime");
 const replacementQuestion = document.getElementById("replacement-question");
 const replacementAllowed = document.getElementById("replacement-allowed");
 const replacementOptions = document.getElementById("replacement-options");
+const mdrOptions = document.getElementById("mdr-options");
 
 regimeSelect.addEventListener("change", () => {
   if (regimeSelect.value === "H mono/poly DR-TB regimen") {
     replacementQuestion.style.display = "block";
+    mdrOptions.style.display = "none";
+  } else if (regimeSelect.value === "MDRTB") {
+    mdrOptions.style.display = "block";
+    replacementQuestion.style.display = "none";
+    replacementOptions.style.display = "none";
   } else {
     replacementQuestion.style.display = "none";
     replacementOptions.style.display = "none";
+    mdrOptions.style.display = "none";
   }
 });
 
@@ -279,25 +424,40 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
   const title = output.querySelector("h3") ? output.querySelector("h3").innerText : "TB Report";
   const info = output.querySelector("p") ? output.querySelector("p").innerText : "";
 
-  const table = output.querySelector("table");
-  if (!table) {
+  const tables = output.querySelectorAll("table");
+  if (!tables.length) {
     alert("⚠ No report table to download!");
     return;
   }
 
-  // Add Title
+  // Add Title + patient info
   doc.setFontSize(16);
   doc.text(title, 14, 20);
   doc.setFontSize(11);
   doc.text(info, 14, 28);
 
-  // AutoTable plugin to parse HTML table
-  doc.autoTable({
-    html: table,
-    startY: 35,
-    theme: "grid",
-    headStyles: { fillColor: [0, 123, 255], textColor: 255 },
-    styles: { fontSize: 10 }
+  let yPos = 35; // initial Y position
+  tables.forEach((table, idx) => {
+    doc.autoTable({
+      html: table,
+      startY: yPos,
+      theme: "grid",
+      headStyles: { fillColor: [0, 123, 255], textColor: 255 },
+      styles: { fontSize: 10 }
+    });
+
+    // Move Y below the table
+    yPos = doc.lastAutoTable.finalY + 8;
+
+    // ✅ Check if the next sibling element is a note (<p>)
+    let nextElem = table.nextElementSibling;
+    if (nextElem && nextElem.tagName === "P") {
+      doc.setFontSize(12);
+      doc.setTextColor(255, 0, 0); // red for high contrast in PDF
+      doc.text(nextElem.innerText, 14, yPos);
+      yPos += 10; // space after note
+      doc.setTextColor(0, 0, 0); // reset back to black
+    }
   });
 
   doc.save("TB_Report.pdf");

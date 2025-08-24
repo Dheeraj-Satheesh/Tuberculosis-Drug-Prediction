@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Tuberculosis Drugs Prediction</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,6 +14,7 @@
     <div class="quote-banner">
         Smart TB Regimen Predictor – Accurate Dosages, Instant Guidance
     </div>
+
     <!-- Navbar -->
     <header class="navbar">
         <div class="logo">
@@ -45,11 +43,12 @@
                 <option value="DSTB">DSTB</option>
                 <option value="H mono/poly DR-TB regimen">H mono/poly DR-TB regimen</option>
                 <option value="BPaLM regimen-26 /39weeks">BPaLM regimen-26/39 weeks</option>
+                <option value="MDRTB">9-11 Month Shorter Oral MDR/RR-TB Regimen</option>
             </select>
 
             <!-- Replacement question -->
             <div id="replacement-question" style="display:none;">
-                <label>Standard regimen- Drugs can be used</label>
+                <label>Standard regimen - Drugs can be used</label>
                 <select id="replacement-allowed">
                     <option value="">-- Select --</option>
                     <option value="yes">Yes</option>
@@ -71,20 +70,31 @@
                 </select>
             </div>
 
+            <!-- MDR/RR-TB Options -->
+            <div id="mdr-options" style="display:none;">
+                <label>Select Medicine Option</label>
+                <select id="mdr-choice">
+                    <option value="">-- Select Option --</option>
+                    <option value="linezolid">Linezolid</option>
+                    <option value="ethionamide">Ethionamide</option>
+                </select>
+            </div>
 
             <button type="submit">Submit</button>
         </form>
 
         <!-- Output Section -->
-        <!-- Output Section -->
         <div id="output" class="output"></div>
         <button id="downloadBtn" class="download-btn" style="display:none;">
             ⬇ Download Report
         </button>
-
     </main>
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
+
     <!-- Footer -->
     <footer class="footer">
         <span>© Satheesh Dheeraj Software Solutions</span>
