@@ -339,3 +339,80 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(255, 75, 43, 0.8);
 }
+.form-card input,
+.form-card select {
+  width: 100%;         /* 🔹 Always take full width */
+  display: block;      /* 🔹 Each on a new line */
+  padding: 12px;
+  margin-bottom: 12px; /* 🔹 Space between fields */
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  transition: all 0.3s ease;
+}
+/* Topnav hidden by default (for toggle on mobile) */
+.topnav {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0,0,0,0.8);
+  padding: 15px 20px;
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+/* Links style */
+.topnav a {
+  color: #00d4ff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.topnav a:hover {
+  color: #ffdd57;
+  transform: scale(1.1);
+}
+
+/* Show when toggle is clicked (mobile only) */
+.topnav.active {
+  display: flex;
+}
+
+/* 🔹 Desktop view: always visible, inline beside logo */
+@media (min-width: 1024px) {
+  .topnav {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    margin-left: 20px;
+  }
+
+  .menu-btn {
+    display: none; /* hide ☰ on desktop */
+  }
+}
+/* Slide-in animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.output.slide-in {
+  animation: slideIn 0.6s ease-out;
+}

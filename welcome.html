@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Smart TB Regimen Predictor</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("bg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .welcome-box {
+            background: rgba(0, 0, 0, 0.65);
+            padding: 40px 50px;
+            border-radius: 20px;
+            text-align: center;
+            color: #00d4ff;
+            font-family: "Poppins", sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-width: 800px;
+            line-height: 1.6;
+            animation: popIn 0.6s ease-out;
+        }
+
+        #typing-text {
+            display: inline-block;
+            border-right: 3px solid #ffdd57;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Cursor blink */
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        #typing-text {
+            animation: blink 0.8s infinite;
+        }
+
+        /* Fade-out before redirect */
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="welcome-box">
+        <span id="typing-text"></span>
+    </div>
+
+    <script>
+        const text = "Welcome to Smart TB Regimen Predictor – Accurate Dosages, Instant Guidance";
+        const typingEl = document.getElementById("typing-text");
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typingEl.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 60); // speed of typing (ms per char)
+            } else {
+                // after typing complete → fade out
+                setTimeout(() => {
+                    document.querySelector(".welcome-box").classList.add("fade-out");
+                }, 1000);
+
+                // redirect after fade-out
+                setTimeout(() => {
+                    window.location.href = "index1.html";
+                }, 2000);
+            }
+        }
+
+        // Start typing after slight delay
+        setTimeout(typeWriter, 500);
+    </script>
+</body>
+
+</html>

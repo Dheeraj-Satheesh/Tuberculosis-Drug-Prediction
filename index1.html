@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>TB Regimen Predictor – Patient Details</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="quote-banner">
+        Smart TB Regimen Predictor – Accurate Dosages, Instant Guidance
+    </div>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="https://satheesh-dheeraj-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">
+                <img src="logo6.jpg" alt="Satheesh Dheeraj Portfolio Logo" />
+            </a>
+        </div>
+        <h1 class="title">TB Regimen Predictor – Patient Details & DST Results</h1>
+        <button class="menu-btn" id="menu-toggle">☰</button>
+    </header>
+
+    <nav class="topnav" id="topnav">
+        <a href="index1.html">Regimen Predictor</a>
+        <a href="index.html">Dosage Calculator</a>
+    </nav>
+
+    <main class="container">
+        <form id="patient-form">
+            <!-- PAGE 1 -->
+            <div class="form-card" id="page1">
+                <h2 class="form-heading">Patient Information</h2>
+
+                <label for="name">Name</label>
+                <input type="text" id="name" required>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" required>
+
+                <label>Gender</label>
+                <select id="gender" required>
+                    <option value="">--Select--</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <div id="pregnant-section" style="display:none;">
+                    <label>Pregnant</label>
+                    <select id="pregnant">
+                        <option value="No" selected>No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div id="lactating-section" style="display:none;">
+                    <label>Lactating / Breastfeeding</label>
+                    <select id="lactating">
+                        <option value="No" selected>No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <label>Microbiologically/Clinically confirmed</label>
+                <select id="confirmed" required>
+                    <option value="">--Select--</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <button type="button" id="nextBtn">Next</button>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="form-card" id="page2" style="display:none;">
+                <h2 class="form-heading">Drug Susceptibility Testing (DST) Results</h2>
+
+                <label>R Resistant</label>
+                <select id="R" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>H-Resistant (katG)</label>
+                <select id="HkatG" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>H-Resistant (InhA)</label>
+                <select id="HinhA" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Lfx-Resistant</label>
+                <select id="Lfx" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Mfx (0.5) Resistant</label>
+                <select id="Mfx05" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Mfx (2.0) Resistant</label>
+                <select id="Mfx20" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>SLI Resistant</label>
+                <select id="SLI" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>E Resistant</label>
+                <select id="E" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Z Resistant</label>
+                <select id="Z" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Lzd Resistant</label>
+                <select id="Lzd" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Cs Resistant</label>
+                <select id="Cs" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Cfz Resistant</label>
+                <select id="Cfz" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Dim Resistant</label>
+                <select id="Dim" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Bdq Resistant</label>
+                <select id="Bdq" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Eto Resistant</label>
+                <select id="Eto" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>PAS Resistant</label>
+                <select id="PAS" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Pa Resistant</label>
+                <select id="Pa" required>
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <div style="display:flex;justify-content:space-between;">
+                    <button type="button" id="prevBtn">Previous</button>
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Output -->
+        <div id="output" class="output"></div>
+    </main>
+
+    <script src="patient.js"></script>
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", () => {
+            document.getElementById("topnav").classList.toggle("active");
+        });
+    </script>
+</body>
+
+</html>
