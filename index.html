@@ -4,124 +4,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Tuberculosis Drugs Prediction</title>
+    <title>Welcome - Smart TB Regimen Predictor</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("bg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .welcome-box {
+            background: rgba(0, 0, 0, 0.65);
+            padding: 40px 50px;
+            border-radius: 20px;
+            text-align: center;
+            color: #00d4ff;
+            font-family: "Poppins", sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-width: 800px;
+            line-height: 1.6;
+            animation: popIn 0.6s ease-out;
+        }
+
+        #typing-text {
+            display: inline-block;
+            border-right: 3px solid #ffdd57;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Cursor blink */
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        #typing-text {
+            animation: blink 0.8s infinite;
+        }
+
+        /* Fade-out before redirect */
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- 🔹 Top Quote Banner -->
-    <div class="quote-banner">
-        Smart TB Regimen Predictor – Accurate Dosages, Instant Guidance
+    <div class="welcome-box">
+        <span id="typing-text"></span>
     </div>
 
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="logo">
-            <a href="https://satheesh-dheeraj-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">
-                <img src="logo6.jpg" alt="Satheesh Dheeraj Portfolio Logo" />
-            </a>
-        </div>
-        <h1 class="title">Tuberculosis Drugs Prediction</h1>
-        <button class="menu-btn" id="menu-toggle">☰</button>
-    </header>
-
-    <!-- 🔹 Collapsible Navigation -->
-    <nav class="topnav" id="topnav">
-        <a href="index1.html">Regimen Predictor</a>
-        <a href="index.html">Dosage Calculator</a>
-    </nav>
-
-
-    <!-- Main Form -->
-    <main class="container">
-        <form id="regime-form" class="form-card">
-            <h2 class="form-heading">Enter TB Patient Details</h2>
-
-            <label for="age">Age</label>
-            <input type="number" id="age" required>
-
-            <label for="weight">Weight (kg)</label>
-            <input type="number" id="weight" required>
-
-            <label for="regime">Select Regimen</label>
-            <select id="regime" required>
-                <option value="">-- Select Regimen--</option>
-                <option value="DSTB">Drug Susceptible TB (DSTB) Regimen</option>
-                <option value="H mono/poly DR-TB regimen">H mono/poly DR-TB Regimen</option>
-                <option value="BPaLM regimen-26 /39weeks">BPaLM regimen-26/39 weeks Regimen</option>
-                <option value="MDRTB">9-11 Month Shorter Oral MDR/RR-TB Regimen</option>
-                <option value="longermdrtb">18-20 months longer oral M/XDR-TB Regimen</option>
-                <option value="longerreplacement">Longer oral M/XDR-TB Regimen(with replacement drugs)
-                </option>
-
-            </select>
-
-            <!-- Replacement question -->
-            <div id="replacement-question" style="display:none;">
-                <label>Standard regimen - Drugs can be used</label>
-                <select id="replacement-allowed">
-                    <option value="">-- Select --</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-
-            <!-- If replacement not allowed -->
-            <div id="replacement-options" style="display:none;">
-                <label>Replacement Sequence - Drugs Cannot be used</label>
-                <select id="replacement-choice">
-                    <option value="">-- Select Option --</option>
-                    <option value="lfx">Levofloxacin (Lfx)</option>
-                    <option value="z">Pyrazinamide (Z)</option>
-                    <option value="lzd">Linezolid (Lzd)</option>
-                    <option value="lfx+z(1)">Levofloxacin + Pyrazinamide (Option 1)</option>
-                    <option value="lfx+z(2)">Levofloxacin + Pyrazinamide (Option 2)</option>
-                    <option value="lfx+z(3)">Levofloxacin + Pyrazinamide (Option 3)</option>
-                </select>
-            </div>
-
-            <!-- MDR/RR-TB Options -->
-            <div id="mdr-options" style="display:none;">
-                <label>Select Medicine Option</label>
-                <select id="mdr-choice">
-                    <option value="">-- Select Option --</option>
-                    <option value="linezolid">Linezolid</option>
-                    <option value="ethionamide">Ethionamide</option>
-                </select>
-            </div>
-
-            <button type="submit">Submit</button>
-        </form>
-
-        <!-- Output Section -->
-        <div id="output" class="output"></div>
-        <button id="downloadBtn" class="download-btn" style="display:none;">
-            ⬇ Download Report
-        </button>
-    </main>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    <script src="script.js"></script>
     <script>
-        document.getElementById("menu-toggle").addEventListener("click", () => {
-            document.getElementById("topnav").classList.toggle("active");
-        });
+        const text = "Welcome to Smart TB Regimen Predictor – Accurate Dosages, Instant Guidance";
+        const typingEl = document.getElementById("typing-text");
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typingEl.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 60); // speed of typing (ms per char)
+            } else {
+                // after typing complete → fade out
+                setTimeout(() => {
+                    document.querySelector(".welcome-box").classList.add("fade-out");
+                }, 1000);
+
+                // redirect after fade-out
+                setTimeout(() => {
+                    window.location.href = "index1.html";
+                }, 2000);
+            }
+        }
+
+        // Start typing after slight delay
+        setTimeout(typeWriter, 500);
     </script>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <span>© Satheesh Dheeraj Software Solutions</span>
-        <div class="social-links">
-            <a href="https://github.com/Dheeraj-Satheesh" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/satheeshdheeraj" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://twitter.com/dheeraj2501" target="_blank"><i class="fab fa-twitter"></i></a>
-        </div>
-    </footer>
-
 </body>
 
 </html>
