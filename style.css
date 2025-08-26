@@ -267,8 +267,9 @@ body {
   font-weight: 600;
   letter-spacing: 0.5px;
   padding: 12px 20px;
-  background: rgba(0,0,0,0.6);
-  color: #00d4ff;
+   background: #0d0d0d; 
+  /* background: rgba(0,0,0,0.6); */
+  color: #aeff00;
   text-shadow: 0px 0px 8px rgba(0, 212, 255, 0.8);
   box-shadow: 0 2px 12px rgba(0,0,0,0.4);
   border-radius: 0 0 14px 14px;

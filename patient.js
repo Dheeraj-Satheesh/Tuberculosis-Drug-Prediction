@@ -153,12 +153,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ------------------ Show Output ------------------
         output.innerHTML = `
-            <h3>Predicted Regimen</h3>
+           <h3 style="color:red; text-shadow: 0 0 6px rgba(255, 0, 0, 0.7);">Predicted Regimen</h3>
             <p><b>Name:</b> ${name}</p>
             <p><b>Age:</b> ${age} years</p>
             <p><b>Gender:</b> ${gender}</p>
-            <p><b>Pregnant:</b> ${pregnant}, <b>Lactating:</b> ${lactating}</p>
-            <p><b>Confirmed:</b> ${confirmed}</p>
             <p style="color:#ffdd57; font-size:1.2rem; margin-top:10px;">
                 ✅ Recommended Regimen: <b>${regimen}</b>
             </p>
