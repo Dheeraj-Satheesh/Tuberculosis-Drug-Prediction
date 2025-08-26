@@ -417,3 +417,49 @@ body {
 .output.slide-in {
   animation: slideIn 0.6s ease-out;
 }
+.predict-btn {
+ background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔥 Glow + scale pulse on hover/focus */
+.predict-btn:hover,
+.predict-btn:focus {
+  animation: glowPulse 1.8s infinite ease-in-out;
+  transform: scale(1.05);
+  outline: none;
+}
+
+/* Arrow inside button */
+.predict-btn i {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Arrow slides right on hover */
+.predict-btn:hover i {
+  transform: translateX(6px);
+}
+
+/* 🔄 Reuse your glowPulse animation */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 212, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 1);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(0, 212, 255, 0.6);
+  }
+}

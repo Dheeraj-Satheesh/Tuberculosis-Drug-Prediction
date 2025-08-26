@@ -165,5 +165,10 @@ document.addEventListener("DOMContentLoaded", () => {
         output.classList.remove("slide-in"); // reset
         void output.offsetWidth; // trick: reflow to restart animation
         output.classList.add("slide-in");
+        // ✅ Show Drug Prediction button
+        document.getElementById("drug-btn-container").style.display = "block";
+
+        // 🔽 Scroll into view for better UX
+        document.getElementById("drug-btn-container").scrollIntoView({ behavior: "smooth" });
     });
 });
