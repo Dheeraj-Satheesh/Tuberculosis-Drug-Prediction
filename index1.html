@@ -188,8 +188,15 @@
 
         <!-- Output -->
         <div id="output" class="output"></div>
-        <!-- Drug Prediction Button (hidden by default) -->
+
+        <!-- Drug Prediction + Eligibility Buttons -->
         <div id="drug-btn-container" style="margin-top: 20px; text-align: center; display:none;">
+            <!-- Eligibility Button (shown only when BPaLM or 9–11) -->
+            <button type="button" id="eligibilityBtn" class="predict-btn" style="display:none;">
+                Eligibility <i class="fas fa-check-circle"></i>
+            </button>
+
+            <!-- Drug Prediction Button -->
             <a href="index2.html">
                 <button type="button" class="predict-btn">
                     Drug Prediction <i class="fas fa-arrow-right"></i>
@@ -197,8 +204,68 @@
             </a>
         </div>
 
-    </main>
+        <!-- BPaLM Eligibility Box -->
+        <div id="eligibilityBoxBPaLM" class="output" style="display:none; margin-top:20px; text-align:left;">
+            <h3>BPaLM Regimen – Inclusion Criteria</h3>
+            <ol>
+                <li>Person with age 14 years & above with new microbiologically confirmed MDR/ RRTB requiring a new
+                    course of treatment or probable MDR-TB who failed H mono/poly DR-TB treatment</li>
+                <li>H/o of Drug Exposure: Person with exposure of less than one month intake of Bdq, Lzd and/ or Pa in
+                    the past</li>
+                <li>Person with exposure of more than one month intake of Bdq, Lzd and/ or Pa and documented sensitivity
+                    to these drugs</li>
+                <li>Person who had not failed treatment with Bdq or Lzd containing shorter or longer regimen, and
+                    sensitivity to these drugs are documented</li>
+                <li>QTcF in ECG is ≤450 ms in males and ≤470 ms in females</li>
+                <li>When serum electrolytes are abnormal and QTcF is >450 ms in males & >470 ms in females in baseline
+                    ECG, after correcting the electrolytes, QTcF in repeat ECG is ≤450 ms in males and ≤470 ms in
+                    females</li>
+                <li>Non-lactating women, lactating women but not breast-feeding, non-pregnant women, pregnant women with
+                    &lt;20 or &lt;24 weeks gestation and who are willing for medical termination of pregnancy (as per
+                    latest MTP gazette notification, as applicable).</li>
+            </ol>
 
+            <h3>Exclusion criteria & Contra-indications</h3>
+            <ol>
+                <li>Person with age below 14 years</li>
+                <li>Person with documented resistance to Bdq, Lzd and/ or Pa</li>
+                <li>Person with significant liver dysfunction [LFT (Liver enzymes and/ or total bilirubin); AST/ALT >3.0
+                    × ULN and Total Bilirubin >2.0 × ULN]</li>
+                <li>People with severe forms of extrapulmonary-MDR-TB like CNS TB, spinal/skeletal TB, or disseminated
+                    TB (miliary TB or TB with multiorgan involvement)</li>
+                <li>Person with significant Cardiac conduction abnormalities in the heart – including structural heart
+                    disease, syncope, long QT syndrome, AV blocks, Reentry arrhythmias etc</li>
+                <li>Person currently having uncontrolled cardiac arrhythmia that requires medication</li>
+                <li>Person with history of additional risk factors for Torsade de Pointes, e.g. heart failure,
+                    hypokalemia, family history of long QT syndrome</li>
+                <li>Baseline QTcF is >450 ms in males & >470 ms in females in baseline ECG, and if electrolytes are
+                    normal. Baseline QTcF is >450 ms in males & >470 ms in females in baseline ECG, electrolytes are
+                    abnormal and even after correcting the electrolytes QTcF in repeat ECG is not ≤450 ms in males and
+                    ≤470 ms in females</li>
+            </ol>
+        </div>
+
+        <!-- 9–11 Month MDR/RR-TB Eligibility Box -->
+        <div id="eligibilityBox911" class="output" style="display:none; margin-top:20px; text-align:left;">
+            <h3>9–11 Month Shorter Oral MDR/RR-TB Regimen – Eligibility Criteria</h3>
+            <ol>
+                <li>Rifampicin resistance detected</li>
+                <li>MDR/RR-TB with FQ resistance not detected</li>
+                <li>No prior exposure &gt;1 month to Bdq, Lfx, Cfz, Lzd (unless susceptibility confirmed)</li>
+                <li>No extensive TB disease</li>
+                <li>No severe extrapulmonary MDR-TB (CNS, skeletal, disseminated)</li>
+                <li>Lzd may replace Eto, including in pregnancy, with monitoring</li>
+                <li>Thyroid function test not required before Lzd</li>
+                <li>
+                    InhA/KatG mutations:
+                    <ul>
+                        <li>Lzd regimen valid even if both mutations present</li>
+                        <li>Eto regimen NOT valid if both mutations present</li>
+                    </ul>
+                </li>
+                <li>Non-lactating, non-pregnant, or &lt;20–24 weeks gestation with MTP consent if Eto used</li>
+            </ol>
+        </div>
     </main>
 
     <script src="patient.js"></script>

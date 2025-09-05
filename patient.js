@@ -64,8 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const Pa = document.getElementById("Pa").value;
 
         // ------------------ Prediction Logic ------------------
-        // Predict regimen
-        let regimen = "Not applicable";
+        let regimen = "18-20 months longer oral M/XDR-TB Regimen";
 
         // ---- DSTB: Drug Susceptible TB ----
         if (
@@ -94,22 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
         else if ((HkatG === "Yes" || HinhA === "Yes") && Lfx === "No" && Z === "No" && R === "No") {
             regimen = "H Mono/Poly DRTB Regimen";
         }
-
         // ---- Modified H + Lfx ----
         else if ((HkatG === "Yes" || HinhA === "Yes") && Lfx === "Yes" && Z === "No" && R === "No") {
             regimen = "Modified H Mono/Poly (Lfx) DRTB Regimen";
         }
-
         // ---- Modified H + Z ----
         else if ((HkatG === "Yes" || HinhA === "Yes") && Z === "Yes" && Lfx === "No" && R === "No") {
             regimen = "Modified H Mono/Poly (Z) DRTB Regimen";
         }
-
         // ---- Modified H + Lfx + Z ----
         else if ((HkatG === "Yes" || HinhA === "Yes") && Lfx === "Yes" && Z === "Yes" && R === "No") {
             regimen = "Modified H Mono/Poly (Lfx & Z) DRTB Regimen";
         }
-
         // ---- Special case: Pregnant + Lactating + ≥14 yrs ----
         else if (
             age >= 14 &&
@@ -118,18 +113,42 @@ document.addEventListener("DOMContentLoaded", () => {
             pregnant === "Yes" &&
             lactating === "Yes"
         ) {
-            if (HkatG === "Yes" && HinhA === "Yes") {
-                regimen = "Shorter Oral Bdq Regimen with Lzd (Pregnant + Lactating)";
-            } else {
-                regimen = "Shorter Oral Bdq Regimen with Eto (Pregnant + Lactating)";
-            }
+            regimen = "Shorter Oral Bdq Regimen with Lzd (Pregnant + Lactating)";
         }
-
         // ---- BPaLM: ≥14 yrs, Confirmed, R Resistant ----
-        else if (confirmed === "Yes" && R === "Yes" && age >= 14) {
+        else if (Lfx === "No" &&
+            Mfx05 === "No" &&
+            Mfx20 === "No" &&
+            SLI === "No" &&
+            E === "No" &&
+            Z === "No" &&
+            Lzd === "No" &&
+            Cs === "No" &&
+            Cfz === "No" &&
+            Dim === "No" &&
+            Bdq === "No" &&
+            Eto === "No" &&
+            PAS === "No" &&
+            Pa === "No" && pregnant === "No" && lactating === "No" && confirmed === "Yes" && R === "Yes" && age >= 14) {
             regimen = "BPaLM Regimen";
         }
-
+        // ---- 9–11 month regimen: fallback option ----
+        else if (Lfx === "No" &&
+            Mfx05 === "No" &&
+            Mfx20 === "No" &&
+            SLI === "No" &&
+            E === "No" &&
+            Z === "No" &&
+            Lzd === "No" &&
+            Cs === "No" &&
+            Cfz === "No" &&
+            Dim === "No" &&
+            Bdq === "No" &&
+            Eto === "No" &&
+            PAS === "No" &&
+            Pa === "No" && confirmed === "Yes" && R === "Yes" && age >= 9) {
+            regimen = "9-11 Month Shorter Oral MDR/RR-TB Regimen";
+        }
         // ---- Shorter Oral Bdq Regimens (<14 yrs, R resistant) ----
         else if (
             age < 14 &&
@@ -148,9 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
             regimen = "Shorter Oral Bdq Regimen with Eto";
         }
 
-
-
-
         // ------------------ Show Output ------------------
         output.innerHTML = `
            <h3 style="color:red; text-shadow: 0 0 6px rgba(255, 0, 0, 0.7);">Predicted Regimen</h3>
@@ -161,14 +177,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 ✅ Recommended Regimen: <b>${regimen}</b>
             </p>
         `;
-        // Trigger slide-in animation each submit
-        output.classList.remove("slide-in"); // reset
-        void output.offsetWidth; // trick: reflow to restart animation
-        output.classList.add("slide-in");
-        // ✅ Show Drug Prediction button
-        document.getElementById("drug-btn-container").style.display = "block";
 
-        // 🔽 Scroll into view for better UX
-        document.getElementById("drug-btn-container").scrollIntoView({ behavior: "smooth" });
+        output.classList.remove("slide-in");
+        void output.offsetWidth;
+        output.classList.add("slide-in");
+
+        // ✅ Show Drug Prediction container
+        document.getElementById("drug-btn-container").style.display = "flex";
+
+        // ✅ References
+        const eligibilityBtn = document.getElementById("eligibilityBtn");
+        const boxBPaLM = document.getElementById("eligibilityBoxBPaLM");
+        const box911 = document.getElementById("eligibilityBox911");
+
+        // Reset all
+        eligibilityBtn.style.display = "none";
+        boxBPaLM.style.display = "none";
+        box911.style.display = "none";
+
+        // ✅ Show Eligibility button for specific regimens
+        if (regimen === "BPaLM Regimen") {
+            eligibilityBtn.style.display = "inline-block";
+            eligibilityBtn.onclick = () => {
+                boxBPaLM.style.display = (boxBPaLM.style.display === "none") ? "block" : "none";
+                box911.style.display = "none";
+                boxBPaLM.scrollIntoView({ behavior: "smooth" });
+            };
+        } else if (regimen === "9-11 Month Shorter Oral MDR/RR-TB Regimen") {
+            eligibilityBtn.style.display = "inline-block";
+            eligibilityBtn.onclick = () => {
+                box911.style.display = (box911.style.display === "none") ? "block" : "none";
+                boxBPaLM.style.display = "none";
+                box911.scrollIntoView({ behavior: "smooth" });
+            };
+        }
     });
 });
